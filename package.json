@@ -1,6 +1,6 @@
 {
   "name": "apollo-uploader",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@types/graphql": "^14.2.2",
+    "@types/node": "^12.0.10",
     "@types/uuid": "^3.4.5",
     "apollo-cache-inmemory": "1.6.2",
     "apollo-client": "2.6.3",
@@ -37,5 +38,8 @@
     "gulp": "^4.0.0",
     "gulp-typescript": "^5.0.1",
     "typescript": "^3.5.3"
+  },
+  "resolutions": {
+    "graphql": "14.3.1"
   }
 }
