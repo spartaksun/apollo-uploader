@@ -1,2 +1,2 @@
-export const { uploadFile } = require('./uploadFile.gql');
-export const { uploadFileLocal } = require('./uploadFileLocal.gql');
+export  { uploadFile } from './uploadFile';
+export { uploadFileLocal } from './uploadFileLocal';

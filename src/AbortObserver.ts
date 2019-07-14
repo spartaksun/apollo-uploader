@@ -1,7 +1,7 @@
 import { AbortObserverInterface } from './types';
 
 class AbortObserver implements AbortObserverInterface {
-    subscriber: XMLHttpRequest = null;
+    subscriber: XMLHttpRequest|null = null;
 
     subscribe = (xhr: XMLHttpRequest) => {
         this.subscriber = xhr;

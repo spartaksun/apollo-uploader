@@ -11,11 +11,11 @@ import {
 import linkFetch from './fetch';
 import AbortObserver from './AbortObserver';
 
-const createUploadLink = (uri: string) => {
+export const createUploadLink = (uri: string) => {
     return new ApolloLink(
-        (operation: Operation, forward: NextLink): any => {
+        (operation: Operation, forward: NextLink|undefined): any => {
             if (operation.operationName !== 'uploadFile') {
-                return forward(operation);
+                return forward ? forward(operation) : null;
             }
 
             const {
@@ -59,8 +59,11 @@ const createUploadLink = (uri: string) => {
                     })
                     .then(parseAndCheckHttpResponse(operation))
                     .then((result: any) => {
-                        observer.next(result);
-                        observer.complete();
+                        if(observer !== undefined) {
+                            observer.next(result);
+                            observer.complete();
+                        }
+
                     })
                     .catch((error: any) => {
                         if (error.name === 'AbortError') {
@@ -79,5 +82,3 @@ const createUploadLink = (uri: string) => {
         }
     );
 };
-
-export default createUploadLink;

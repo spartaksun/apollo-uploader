@@ -1,1 +1,1 @@
-export const { uploadingVideoFile } = require('./uploadingVideoFile.gql');
+export { uploadingVideoFile } from './uoloadingVideoFile';

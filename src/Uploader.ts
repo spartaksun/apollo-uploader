@@ -10,7 +10,7 @@ import AbortObserver from './AbortObserver';
 import { UploadSuccessResolver } from './types';
 
 
-class Uploader {
+export class Uploader {
     apolloClient: ApolloClient<any>;
     uploading: HashMap<FileUploadProcess> = {};
     abort: HashMap<AbortObserver> = {};

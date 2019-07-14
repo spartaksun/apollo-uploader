@@ -1,32 +1,16 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "outDir": "./lib",
         "module": "commonjs",
-        "lib": ["es2017", "dom", "es2016.array.include", "esnext.asynciterable"],
-        "noEmitOnError": true,
-        "jsx": "react",
-        "sourceMap": true,
-        "removeComments": true,
-        "importHelpers": true,
+        "lib": ["es2017", "es7", "es6", "dom"],
+        "declaration": true,
+        "outDir": "lib",
         "strict": true,
-        "strictNullChecks": false,
-        "noUnusedLocals": false,
-        "noUnusedParameters": true,
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
-        "moduleResolution": "node",
-        "baseUrl": "./src",
-        "traceResolution": false,
-        "suppressImplicitAnyIndexErrors": true,
-        "forceConsistentCasingInFileNames": true,
-        "paths": {
-            "*": ["./*", "../node_modules/*"]
-        },
-        "typeRoots": ["./node_modules/@types", "./src/shared/globals"],
-        "experimentalDecorators": true, // Enables experimental support for ES decorators.
-        "esModuleInterop": true // for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.
+        "esModuleInterop": true,
+        "strictNullChecks": false
     },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "**/stories"]
+    "exclude": [
+        "node_modules",
+        "lib"
+    ]
 }
