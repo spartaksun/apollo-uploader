@@ -17,7 +17,6 @@
     "apollo-client": "2.6.3",
     "apollo-link": "^1.2.12",
     "apollo-link-http-common": "^0.2.4",
-    "apollo-uploader": "^0.0.3",
     "exports-loader": "^0.7.0",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
