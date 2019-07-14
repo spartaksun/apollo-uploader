@@ -1,11 +1,13 @@
 {
   "name": "apollo-uploader",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "gulp": "gulp",
-    "start": "yarn gulp"
+    "start": "yarn gulp",
+    "build": "tsc"
   },
   "dependencies": {
     "@types/graphql": "^14.2.2",
@@ -15,9 +17,13 @@
     "apollo-client": "2.6.3",
     "apollo-link": "^1.2.12",
     "apollo-link-http-common": "^0.2.4",
+    "apollo-uploader": "^0.0.3",
+    "exports-loader": "^0.7.0",
     "graphql": "^14.4.2",
+    "graphql-tag": "^2.10.1",
     "tslint": "^5.11.0",
     "uuid": "^3.3.2",
+    "whatwg-fetch": "^3.0.0",
     "zen-observable-ts": "^0.8.9"
   },
   "repository": {

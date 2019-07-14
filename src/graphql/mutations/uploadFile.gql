@@ -1,6 +1,0 @@
-mutation uploadFile($file: Upload!, $bucket: String!) {
-    uploadFile(file: $file, bucket: $bucket) {
-        id
-
-    }
-}
