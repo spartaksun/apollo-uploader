@@ -1,0 +1,3 @@
+mutation uploadFileLocal($file: Upload!) {
+    uploadFileLocal(file: $file) @client
+}

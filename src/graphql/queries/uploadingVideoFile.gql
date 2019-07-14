@@ -1,0 +1,14 @@
+query uploadingVideoFile {
+    uploading @client {
+        id
+        file
+        fileSize
+        fileName
+        status
+        loaded
+        total
+        error
+        video
+        bucket
+    }
+}

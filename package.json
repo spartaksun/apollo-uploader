@@ -1,0 +1,41 @@
+{
+  "name": "apollo-uploader",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "gulp": "gulp",
+    "start": "yarn gulp"
+  },
+  "dependencies": {
+    "@types/graphql": "^14.2.2",
+    "@types/uuid": "^3.4.5",
+    "apollo-cache-inmemory": "1.6.2",
+    "apollo-client": "2.6.3",
+    "apollo-link": "^1.2.12",
+    "apollo-link-http-common": "^0.2.4",
+    "graphql": "^14.4.2",
+    "tslint": "^5.11.0",
+    "uuid": "^3.3.2",
+    "zen-observable-ts": "^0.8.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spartaksun/apollo-uploader.git"
+  },
+  "keywords": [
+    "apollo",
+    "upload"
+  ],
+  "author": "Alexey Belyakovsky",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/spartaksun/apollo-uploader/issues"
+  },
+  "homepage": "https://github.com/spartaksun/apollo-uploader#readme",
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-typescript": "^5.0.1",
+    "typescript": "^3.5.3"
+  }
+}
