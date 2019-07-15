@@ -140,19 +140,19 @@ export class Uploader {
                     this.onSuccess(id, filename)
                         .then((id: string) => {
                             this.updateProcess(process, {
-                                status: FileUploadStatuses.VIDEO_CREATION_DONE,
+                                status: FileUploadStatuses.POST_UPLOAD_PROCESS_DONE,
                                 video: id,
                             });
                         })
                         .catch((error: Error) => {
                             this.updateProcess(process, {
-                                status: FileUploadStatuses.VIDEO_CREATION_ERROR,
+                                status: FileUploadStatuses.POST_UPLOAD_PROCESS_ERROR,
                                 error: error.message,
                             });
                         });
                 } else {
                     this.updateProcess(process, {
-                        status: FileUploadStatuses.VIDEO_CREATION_DONE,
+                        status: FileUploadStatuses.POST_UPLOAD_PROCESS_DONE,
                         video: id,
                     });
                 }
