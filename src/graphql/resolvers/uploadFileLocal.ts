@@ -1,14 +1,14 @@
 import uuid = require('uuid/v4');
 import {FileUploadStatuses, FileUploadBuckets, HashMap} from '../../types';
-import { uploadingVideoFile as queryUploadVideoFile } from '../queries';
+import { uploadingFile } from '../queries';
 
-export const uploadFileLocal = (_: any, { file }: HashMap<any>, { cache }: any): any => {
-    const previous = cache.readQuery({ query: queryUploadVideoFile }) as any;
+export const uploadFileLocal = (_: any, { file, params }: HashMap<any>, { cache }: any): any => {
+    const previous = cache.readQuery({ query: uploadingFile }) as any;
     const newProcess = {
         __typename: 'UploadProcess',
         file,
-        bucket: FileUploadBuckets.IMAGE,
         id: uuid(),
+        params: JSON.stringify(params),
         fileSize: file.size,
         fileName: file.name,
         status: FileUploadStatuses.UPLOAD_PENDING,
@@ -22,7 +22,7 @@ export const uploadFileLocal = (_: any, { file }: HashMap<any>, { cache }: any):
     };
 
     cache.writeQuery({
-        query: queryUploadVideoFile,
+        query: uploadingFile,
         data,
     });
 

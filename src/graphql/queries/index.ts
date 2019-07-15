@@ -1,1 +1,1 @@
-export { uploadingVideoFile } from './uoloadingVideoFile';
+export { uploadingFile } from './uploadingFile';

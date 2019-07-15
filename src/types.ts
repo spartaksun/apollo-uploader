@@ -9,7 +9,7 @@ export interface HashMap<T> {
 }
 export interface FileUploadProcess {
     id: string;
-    bucket?: FileUploadBuckets;
+    params?: string;
     file: FileType;
     fileSize: number;
     fileName: string;
@@ -28,6 +28,18 @@ export interface FileType {
     name: string;
     size: number;
     mimeType: string;
+}
+
+export interface FileParams {
+    crop?: CropInput
+    bucket?: FileUploadBuckets;
+}
+
+export interface CropInput {
+    offsetX: number;
+    offsetY: number;
+    width: number;
+    height: number;
 }
 export enum FileUploadStatuses {
     UPLOAD_PENDING = 'UPLOAD_PENDING',

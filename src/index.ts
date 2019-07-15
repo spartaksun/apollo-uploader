@@ -5,7 +5,6 @@ import {
     resetAllUploadsLocal as resetAllUploadsLocalResolver,
     abortUploadFileLocal as abortUploadFileLocalResolver
 } from './graphql/resolvers'
-import {uploadingVideoFile} from "./graphql/queries";
 import {uploadFileLocal, uploadFile } from './graphql/mutations';
 
 export default {
@@ -14,7 +13,6 @@ export default {
     uploadFileLocalResolver,
     resetAllUploadsLocalResolver,
     abortUploadFileLocalResolver,
-    uploadingVideoFile,
     uploadFileLocal,
     uploadFile
 };

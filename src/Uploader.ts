@@ -1,13 +1,14 @@
 import ApolloClient from 'apollo-client/ApolloClient';
-import { FetchResult } from 'apollo-link';
-import { defaultDataIdFromObject } from 'apollo-cache-inmemory';
-import { ApolloError } from 'apollo-client';
+import {FetchResult} from 'apollo-link';
+import {defaultDataIdFromObject} from 'apollo-cache-inmemory';
+import {ApolloError} from 'apollo-client';
 
 import {FileUploadStatuses, FileUploadProcess, HashMap} from './types';
-import { uploadingVideoFile } from './graphql/queries';
-import { uploadFile } from './graphql/mutations';
+import {uploadingFile} from './graphql/queries';
+import {uploadFile} from './graphql/mutations';
 import AbortObserver from './AbortObserver';
-import { UploadSuccessResolver } from './types';
+import {UploadSuccessResolver} from './types';
+
 
 
 export class Uploader {
@@ -21,9 +22,9 @@ export class Uploader {
         this.apolloClient = apolloClient;
         this.apolloClient
             .watchQuery({
-                query: uploadingVideoFile,
+                query: uploadingFile,
             })
-            .forEach(({ data: { uploading } }: {data: { uploading: Array<FileUploadProcess>}}) => {
+            .forEach(({data: {uploading}}: { data: { uploading: Array<FileUploadProcess> } }) => {
                 this.refreshUploadingList(uploading);
                 this.processAll(uploading);
             })
@@ -70,9 +71,9 @@ export class Uploader {
             (acc: HashMap<any>, f: string) =>
                 f in obj
                     ? {
-                          ...acc,
-                          [f]: obj[f],
-                      }
+                        ...acc,
+                        [f]: obj[f],
+                    }
                     : acc,
             {}
         );
@@ -103,7 +104,7 @@ export class Uploader {
             this.deleteAbortObserver(process);
         }
 
-        this.updateProcess(process, { status: FileUploadStatuses.UPLOAD_ABORTED_BY_CLIENT });
+        this.updateProcess(process, {status: FileUploadStatuses.UPLOAD_ABORTED_BY_CLIENT});
     };
 
     initAbortObserver = (process: FileUploadProcess) => {
@@ -113,28 +114,38 @@ export class Uploader {
     };
 
     handleProgress = (process: FileUploadProcess) => (e: ProgressEvent) => {
-        const { loaded, total } = e;
-        this.updateProcess(process, { loaded, total });
+        const {loaded, total} = e;
+        this.updateProcess(process, {loaded, total});
     };
 
     startUpload = (process: FileUploadProcess) => {
-        this.updateProcess(process, { status: FileUploadStatuses.UPLOAD_IN_PROGRESS });
+        this.updateProcess(process, {status: FileUploadStatuses.UPLOAD_IN_PROGRESS});
+        let variables = {
+            file: process.file,
+        } as any;
+
+        if(process.params) {
+            const params = JSON.parse(process.params)
+            if(params.crop) {
+                variables.crop = params.crop
+            }
+            if(params.bucket) {
+                variables.bucket = params.bucket
+            }
+        }
 
         this.apolloClient
             .mutate({
                 mutation: uploadFile,
-                variables: {
-                    file: process.file,
-                    bucket: process.bucket,
-                },
+                variables,
                 context: {
                     onProgress: this.handleProgress(process),
                     abortObserver: this.initAbortObserver(process),
                 },
             })
-            .then(({ data: { uploadFile: { id, filename } } }: FetchResult<any>) => {
+            .then(({data: {uploadFile: {id, filename}}}: FetchResult<any>) => {
                 this.deleteAbortObserver(process);
-                this.updateProcess(process, { status: FileUploadStatuses.UPLOAD_DONE });
+                this.updateProcess(process, {status: FileUploadStatuses.UPLOAD_DONE});
 
                 if (this.onSuccess) {
                     this.onSuccess(id, filename)
@@ -168,4 +179,4 @@ export class Uploader {
     };
 }
 
-export default new Uploader();
+export default Uploader;
