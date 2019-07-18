@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
-export const uploadingVideoFile = gql`
-    query uploadingVideoFile {
+export const uploadingFile = gql`
+    query uploadinFile {
         uploading @client {
             id
             file
@@ -12,7 +12,7 @@ export const uploadingVideoFile = gql`
             total
             error
             video
-            bucket
+            params
         }
     }
 `;
