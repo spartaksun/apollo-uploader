@@ -1,5 +1,3 @@
-import { Error } from 'tslint/lib/error';
-
 import parseHeaders from './parseHeaders';
 import {HashMap} from "./types";
 

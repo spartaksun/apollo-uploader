@@ -8,6 +8,7 @@ import {uploadingFile} from './graphql/queries';
 import {uploadFile} from './graphql/mutations';
 import AbortObserver from './AbortObserver';
 import {UploadSuccessResolver} from './types';
+import {abortUploadFileLocal, uploadFileLocal, resetAllUploadsLocal} from './graphql/resolvers';
 
 
 
@@ -20,6 +21,15 @@ export class Uploader {
     subscribe = (apolloClient: ApolloClient<any>, onSuccess?: UploadSuccessResolver) => {
         this.onSuccess = onSuccess;
         this.apolloClient = apolloClient;
+
+        apolloClient.addResolvers({
+            Mutation: {
+                abortUploadFileLocal,
+                uploadFileLocal,
+                resetAllUploadsLocal
+            },
+        });
+
         this.apolloClient
             .watchQuery({
                 query: uploadingFile,
