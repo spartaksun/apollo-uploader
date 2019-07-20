@@ -1,6 +1,6 @@
 {
   "name": "apollo-uploader",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -30,6 +30,7 @@
     "apollo-link-http-common": "^0.2.4",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
+    "tslib": "^1.10.0",
     "uuid": "^3.3.2",
     "whatwg-fetch": "^3.0.0",
     "zen-observable-ts": "^0.8.9"
