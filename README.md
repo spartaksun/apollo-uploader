@@ -4,7 +4,7 @@ See example <a href="https://github.com/spartaksun/apollo-uploader-example-app">
 
 #### Install
 ```code
-npm i apollo-uploader
+npm i apollo-uploader apollo-client apollo-cache-inmemory
 ```
 #### Initialize
 
