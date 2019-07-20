@@ -79,7 +79,7 @@ export class Uploader {
         );
 
     extractProcessFields = (process: FileUploadProcess) => {
-        return this.pick(process, ['status', 'fileName', 'fileSize', 'error', 'loaded', 'total', 'video']);
+        return this.pick(process, ['status', 'fileName', 'fileSize', 'error', 'loaded', 'total']);
     };
 
     updateProcess = (process: FileUploadProcess, params: any) => {
@@ -152,7 +152,6 @@ export class Uploader {
                         .then((id: string) => {
                             this.updateProcess(process, {
                                 status: FileUploadStatuses.POST_UPLOAD_PROCESS_DONE,
-                                video: id,
                             });
                         })
                         .catch((error: Error) => {
@@ -164,7 +163,6 @@ export class Uploader {
                 } else {
                     this.updateProcess(process, {
                         status: FileUploadStatuses.POST_UPLOAD_PROCESS_DONE,
-                        video: id,
                     });
                 }
             })

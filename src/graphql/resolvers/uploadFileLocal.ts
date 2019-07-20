@@ -15,7 +15,6 @@ export const uploadFileLocal = (_: any, { file, params }: HashMap<any>, { cache 
         loaded: 0,
         total: 0,
         error: '',
-        video: '',
     };
     const data = {
         uploading: [...previous.uploading, newProcess],

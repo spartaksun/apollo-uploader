@@ -17,7 +17,6 @@ export interface FileUploadProcess {
     loaded: number;
     total: number;
     error: string | null;
-    video: string | null;
     abort: boolean | null;
 }
 export enum FileUploadBuckets {

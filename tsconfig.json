@@ -1,16 +1,27 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "lib": ["es2017", "es7", "es6", "dom"],
-        "declaration": true,
-        "outDir": "lib",
         "strict": true,
+        "strictNullChecks": false,
+        "rootDir": "./src",
+        "outDir": "lib",
+        "target": "es5",
+        "lib": ["es6", "dom"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "removeComments": true,
+        "sourceMap": true,
+        "declaration": true,
+        "declarationMap": true,
+        "noImplicitAny": false,
+        "noUnusedParameters": false,
+//        "noUnusedLocals": true,
         "esModuleInterop": true,
-        "strictNullChecks": false
+        "skipLibCheck": true
     },
+
     "exclude": [
-        "node_modules",
-        "lib"
-    ]
+        "node_modules"
+    ],
+    "include": ["src/**/*"]
 }

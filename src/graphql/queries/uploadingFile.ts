@@ -11,7 +11,6 @@ export const uploadingFile = gql`
             loaded
             total
             error
-            video
             params
         }
     }
