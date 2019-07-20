@@ -45,6 +45,8 @@ class UploadExample extends React.Component {
 ```code 
 import * as React from 'react';
 import { upload } from 'apollo-uploader';
+import {FileUploadProcess, FileUploadStatuses} from "apollo-uploader/lib/types";
+
 
 class UploadExample extends React.Component {
     handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
