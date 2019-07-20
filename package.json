@@ -1,6 +1,6 @@
 {
   "name": "apollo-uploader",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -10,9 +10,6 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@types/graphql": "^14.2.2",
-    "@types/node": "^12.0.10",
-    "@types/uuid": "^3.4.5",
     "apollo-cache-inmemory": "1.6.2",
     "apollo-client": "2.6.3",
     "apollo-link": "^1.2.12",
@@ -40,11 +37,18 @@
   },
   "homepage": "https://github.com/spartaksun/apollo-uploader#readme",
   "devDependencies": {
+    "@types/graphql": "^14.2.2",
+    "@types/node": "^12.0",
+    "@types/uuid": "^3.4.5",
     "gulp": "^4.0.0",
     "gulp-typescript": "^5.0.1",
     "typescript": "^3.5.3"
   },
+  "files": [
+    "./lib"
+  ],
   "resolutions": {
-    "graphql": "14.3.1"
+    "graphql": "14.3.1",
+    "typescript": "3.5.3"
   }
 }
