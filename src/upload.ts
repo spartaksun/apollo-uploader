@@ -18,7 +18,7 @@ export default (file: File, params?: ParamsInterface): Observable<any> => {
     let id: string = null;
 
     const client = UploaderInstance.getClient();
-    const unsubscribe = () => {
+    const unSubscribe = () => {
         if (id) {
             UploaderInstance.unsubscribe(id);
             id = null
@@ -42,17 +42,17 @@ export default (file: File, params?: ParamsInterface): Observable<any> => {
                             case FileUploadStatuses.UPLOAD_DONE:
                                 observer.next(process);
                                 observer.complete();
-                                unsubscribe();
+                                unSubscribe();
                                 break;
                             case FileUploadStatuses.UPLOAD_ERROR:
                                 observer.next(process);
                                 observer.error(process.error);
-                                unsubscribe();
+                                unSubscribe();
                                 break;
                             case FileUploadStatuses.UPLOAD_ABORTED_BY_CLIENT:
                                 observer.next(process);
                                 observer.complete();
-                                unsubscribe();
+                                unSubscribe();
                                 break;
                             case FileUploadStatuses.POST_UPLOAD_PROCESS_DONE:
                                 break;
@@ -62,12 +62,12 @@ export default (file: File, params?: ParamsInterface): Observable<any> => {
                     },
                     () => {
                         observer.complete();
-                        unsubscribe()
+                        unSubscribe()
                     }
                 )
             }).catch((e: any) => {
                 observer.error(e);
-                unsubscribe();
+                unSubscribe();
             });
         });
     }
