@@ -1,6 +1,6 @@
 import ApolloClient from 'apollo-client/ApolloClient';
 import {FetchResult} from 'apollo-link';
-import {defaultDataIdFromObject} from 'apollo-cache-inmemory';
+import {defaultDataIdFromObject, NormalizedCacheObject} from 'apollo-cache-inmemory';
 import {ApolloError} from 'apollo-client';
 
 import {FileUploadStatuses, FileUploadProcess, HashMap} from './types';
@@ -11,7 +11,7 @@ import {UploadSuccessResolver} from './types';
 import {abortUploadFileLocal, uploadFileLocal, resetAllUploadsLocal} from './graphql/resolvers';
 
 class Uploader {
-    apolloClient: ApolloClient<any>;
+    apolloClient: ApolloClient<NormalizedCacheObject>;
     uploading: HashMap<FileUploadProcess> = {};
     abort: HashMap<AbortObserver> = {};
     onSuccess: (id: string, fileName: string) => Promise<any> = null;
@@ -35,7 +35,7 @@ class Uploader {
         delete this.subscribers[id];
     };
 
-    init = (apolloClient: ApolloClient<any>, onSuccess?: UploadSuccessResolver) => {
+    init = (apolloClient: ApolloClient<NormalizedCacheObject>, onSuccess?: UploadSuccessResolver) => {
 
         this.onSuccess = onSuccess;
         this.apolloClient = apolloClient;
