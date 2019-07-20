@@ -10,15 +10,33 @@ import AbortObserver from './AbortObserver';
 import {UploadSuccessResolver} from './types';
 import {abortUploadFileLocal, uploadFileLocal, resetAllUploadsLocal} from './graphql/resolvers';
 
-
-
-export class Uploader {
+class Uploader {
     apolloClient: ApolloClient<any>;
     uploading: HashMap<FileUploadProcess> = {};
     abort: HashMap<AbortObserver> = {};
     onSuccess: (id: string, fileName: string) => Promise<any> = null;
+    subscribers: HashMap<{
+        callback: (process: FileUploadProcess) => void,
+        finish: () => void
+    }> = {};
 
-    subscribe = (apolloClient: ApolloClient<any>, onSuccess?: UploadSuccessResolver) => {
+    subscribe = (
+        id: string,
+        callback: (process: FileUploadProcess) => void,
+        finish: () => void
+    ): void => {
+        this.subscribers[id] = {
+            callback,
+            finish
+        };
+    };
+
+    unsubscribe = (id: string): void => {
+        delete this.subscribers[id];
+    };
+
+    init = (apolloClient: ApolloClient<any>, onSuccess?: UploadSuccessResolver) => {
+
         this.onSuccess = onSuccess;
         this.apolloClient = apolloClient;
 
@@ -29,8 +47,8 @@ export class Uploader {
                 resetAllUploadsLocal
             },
         });
-
-        this.apolloClient
+        apolloClient.writeData({data: {uploading: []}});
+        apolloClient
             .watchQuery({
                 query: uploadingFile,
             })
@@ -38,7 +56,11 @@ export class Uploader {
                 this.refreshUploadingList(uploading);
                 this.processAll(uploading);
             })
-            .catch((e: any) => console.log('Error when watchQuery:', e));
+            .catch(() => new Error('Watching query error'));
+    };
+
+    getClient = (): ApolloClient<any> => {
+        return this.apolloClient
     };
 
     refreshUploadingList = (uploading: FileUploadProcess[]) => {
@@ -52,6 +74,12 @@ export class Uploader {
 
     processAll = (uploading: FileUploadProcess[]) => {
         if (uploading.length) {
+            uploading.forEach((process: FileUploadProcess) => {
+                if (this.subscribers[process.id]) {
+                    this.subscribers[process.id].callback(process);
+                }
+            });
+
             const inProgress = uploading.filter(
                 (process: FileUploadProcess) => process.status === FileUploadStatuses.UPLOAD_IN_PROGRESS
             );
@@ -134,12 +162,12 @@ export class Uploader {
             file: process.file,
         } as any;
 
-        if(process.params) {
-            const params = JSON.parse(process.params)
-            if(params.crop) {
+        if (process.params) {
+            const params = JSON.parse(process.params);
+            if (params.crop) {
                 variables.crop = params.crop
             }
-            if(params.bucket) {
+            if (params.bucket) {
                 variables.bucket = params.bucket
             }
         }
@@ -159,7 +187,7 @@ export class Uploader {
 
                 if (this.onSuccess) {
                     this.onSuccess(id, filename)
-                        .then((id: string) => {
+                        .then(() => {
                             this.updateProcess(process, {
                                 status: FileUploadStatuses.POST_UPLOAD_PROCESS_DONE,
                             });
@@ -187,4 +215,4 @@ export class Uploader {
     };
 }
 
-export default Uploader;
+export const UploaderInstance = new Uploader();

@@ -16,7 +16,6 @@ export const uploadFileLocal = (_: any, { file, params }: HashMap<any>, { cache 
         total: 0,
         error: '',
     };
-    console.log('upload file lical', newProcess)
     const data = {
         uploading: [...previous.uploading, newProcess],
     };

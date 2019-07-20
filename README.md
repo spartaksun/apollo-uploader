@@ -1,3 +1,5 @@
+Example React application: https://github.com/spartaksun/apollo-uploader-example-app
+
 File uploading statuses:
 * UPLOAD_PENDING
 * UPLOAD_IN_PROGRESS

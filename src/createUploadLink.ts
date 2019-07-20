@@ -1,5 +1,5 @@
-import {Observer} from 'zen-observable-ts';
-import {Operation, ApolloLink, Observable, NextLink} from 'apollo-link';
+import {Observer, Observable} from 'zen-observable-ts';
+import {Operation, ApolloLink, NextLink} from 'apollo-link';
 import {
     selectURI,
     selectHttpOptionsAndBody,

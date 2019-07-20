@@ -18,10 +18,10 @@ const fetch = (xhr: XMLHttpRequest, url: string, options: HashMap<string> = {}):
             reject(new Error('Upload aborted'));
         };
         xhr.onerror = () => {
-            reject(new TypeError('Upload failed'));
+            reject(new Error('Upload failed'));
         };
         xhr.ontimeout = () => {
-            reject(new TypeError('Upload failed (timeout)'));
+            reject(new Error('Upload failed (timeout)'));
         };
         xhr.open(options.method, url, true);
 
