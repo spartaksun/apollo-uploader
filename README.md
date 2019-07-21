@@ -193,20 +193,24 @@ mutation uploadFile($file: Upload!, $bucket: String, $crop: CropInput ) {
 ```
 
 #### Upload callback
-You can pass a second argument when initializing Uploader:
+You can pass a second argument as a callback function when initializing Uploader.
 ```typescript jsx
 ...
-Uploader.init(client, (result: {id: string}): Promise<any> => {
-    
-    return new Promise((resolve: (result: any) => void, reject: () => void) => {
-        
-        // do some stuff here
-        resolve(result);
-        
-        // or call reject on error
-        reject();
-    });
-});
+
+const callback = (result: {id: string}): Promise<any> => {
+     return new Promise((resolve: (result: any) => void, reject: () => void) => {
+         // do some stuff here
+         if(/* success */) {
+             resolve(result);
+         } else {
+             reject();
+         }
+         // or call reject on error
+         
+     });
+ };
+
+Uploader.init(client, callback);
 ```
 
 
