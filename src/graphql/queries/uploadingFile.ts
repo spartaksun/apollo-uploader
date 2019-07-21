@@ -12,6 +12,7 @@ export const uploadingFile = gql`
             total
             error
             params
+            result
         }
     }
 `;

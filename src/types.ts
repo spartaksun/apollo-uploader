@@ -1,4 +1,4 @@
-export type UploadSuccessResolver = (id: string, fileName: string) => Promise<any>;
+export type UploadSuccessResolver = (result: any) => Promise<any>;
 
 export interface AbortObserverInterface {
     subscribe: (xhr: XMLHttpRequest) => void;
@@ -18,6 +18,7 @@ export interface FileUploadProcess {
     total: number;
     error: string | null;
     abort: boolean | null;
+    result: string | any
 }
 export enum FileUploadBuckets {
     VIDEO = 'video',

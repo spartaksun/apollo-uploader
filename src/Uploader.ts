@@ -14,7 +14,7 @@ class Uploader {
     apolloClient: ApolloClient<NormalizedCacheObject>;
     uploading: HashMap<FileUploadProcess> = {};
     abort: HashMap<AbortObserver> = {};
-    onSuccess: (id: string, fileName: string) => Promise<any> = null;
+    onSuccess: (result: any) => Promise<any> = null;
     subscribers: HashMap<{
         callback: (process: FileUploadProcess) => void,
         finish: () => void
@@ -117,7 +117,7 @@ class Uploader {
         );
 
     extractProcessFields = (process: FileUploadProcess) => {
-        return this.pick(process, ['status', 'fileName', 'fileSize', 'error', 'loaded', 'total']);
+        return this.pick(process, ['status', 'fileName', 'fileSize', 'error', 'loaded', 'total', 'result', 'params']);
     };
 
     updateProcess = (process: FileUploadProcess, params: any) => {
@@ -172,6 +172,7 @@ class Uploader {
             }
         }
 
+        // server mutation
         this.apolloClient
             .mutate({
                 mutation: uploadFile,
@@ -181,12 +182,15 @@ class Uploader {
                     abortObserver: this.initAbortObserver(process),
                 },
             })
-            .then(({data: {uploadFile: {id, filename}}}: FetchResult<any>) => {
+            .then(({data: {uploadFile: result}}: FetchResult<any>) => {
                 this.deleteAbortObserver(process);
-                this.updateProcess(process, {status: FileUploadStatuses.UPLOAD_DONE});
+                this.updateProcess(process, {
+                    status: FileUploadStatuses.UPLOAD_DONE,
+                    result: JSON.stringify(result)
+                });
 
                 if (this.onSuccess) {
-                    this.onSuccess(id, filename)
+                    this.onSuccess(result)
                         .then(() => {
                             this.updateProcess(process, {
                                 status: FileUploadStatuses.POST_UPLOAD_PROCESS_DONE,
