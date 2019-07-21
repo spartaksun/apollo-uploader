@@ -152,7 +152,7 @@ class UploadList extends React.Component {
     }
 }
 ```
-**Note:** Do not forget to wrap root component with a ApolloProvider
+**Note:** Do not forget to wrap a root component with an ApolloProvider.
 
 #### FileUploadProcess
 
