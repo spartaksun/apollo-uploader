@@ -20,8 +20,9 @@ const apolloClient =  new ApolloClient({
 });
 Uploader.init(apolloClient);
 ```
-**Note:** Assumes that you already have installed `apollo-client` and some of Apollo cache implementation like `apollo-cache-inmemory`.
-**Note:** instead of direct passing `uploadLink` to `link` property at ApolloClient config, you should concat it with other links in your app, i.e http link. For example you can use `from()` from 'apollo-link':
+**Note:** 
+* Assumes that you already have installed `apollo-client` and some of Apollo cache implementation like `apollo-cache-inmemory`.
+* Instead of direct passing `uploadLink` to `link` property at ApolloClient config, you should concat it with other links in your app, i.e http link. For example you can use `from()` from 'apollo-link':
 ```typescript jsx
 ...
 import { from } from 'apollo-link';
