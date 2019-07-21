@@ -18,7 +18,7 @@ const apolloClient =  new ApolloClient({
     link: uploadLink,
     cache: new InMemoryCache({})
 });
-Uploader.init(apolloClient);
+Uploader.init({apolloClient});
 ```
 **Note:** 
 * Assumes that you already have installed `apollo-client` and some of Apollo cache implementation like `apollo-cache-inmemory`.
@@ -180,22 +180,12 @@ class UploadList extends React.Component {
 | POST_UPLOAD_PROCESS_DONE       |  Called `resolve()` in `upload callback` |
 
 
-#### Upload mutation
-Apollo-uploader sends a mutation with attached file. You need to implement resolver for `uploadFile` mutation and it must return `id` field in response.
-```graphql
-mutation uploadFile($file: Upload!, $bucket: String, $crop: CropInput ) {
-        uploadFile(file: $file, bucket: $bucket, crop: $crop) {
-            id
-        }
-    }
-```
-
 #### Upload callback
 You can pass a second argument as a callback function when initializing Uploader.
 ```typescript jsx
 ...
 
-const callback = (result: {id: string}): Promise<any> => {
+const onSuccess = (result: {id: string}): Promise<any> => {
      return new Promise((resolve: (result: any) => void, reject: () => void) => {
          // do some stuff here
          if(/* success */) {
@@ -208,8 +198,44 @@ const callback = (result: {id: string}): Promise<any> => {
      });
  };
 
-Uploader.init(client, callback);
+Uploader.init({
+    apolloClient, 
+    onSuccess
+});
 ```
+
+#### Customize upload mutation
+Apollo-uploader sends a mutation with attached file. You need to implement resolver on your server for `uploadFile` mutation.
+The default mutation looks like this:
+```graphql
+mutation uploadFile($file: Upload!, $bucket: String, $crop: CropInput ) {
+        uploadFile(file: $file, bucket: $bucket, crop: $crop) {
+            id
+        }
+    }
+```
+You can customize upload mutation by passing it in init():
+
+```typescript jsx
+...
+import gql from "graphql-tag";
+
+Uploader.init({
+    ...
+    mutation: gql`
+      mutation uploadFile($file: Upload!, $customParam: String!) {
+          uploadFile(file: $file, customParam: $customParam)
+      }`
+});
+```
+And then pass customParam to `upload()`:
+````typescript jsx
+import { upload } from 'apollo-uploader';
+
+upload(file, {
+            customParam: 'custom param value'
+        })
+````
 
 
 [![License](https://poser.pugx.org/thecodingmachine/graphqlite/license)](https://packagist.org/packages/thecodingmachine/graphqlite)

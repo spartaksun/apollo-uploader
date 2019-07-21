@@ -1,5 +1,5 @@
 import ApolloClient from 'apollo-client/ApolloClient';
-import {FetchResult} from 'apollo-link';
+import {DocumentNode, FetchResult} from 'apollo-link';
 import {defaultDataIdFromObject, NormalizedCacheObject} from 'apollo-cache-inmemory';
 import {ApolloError} from 'apollo-client';
 
@@ -19,6 +19,7 @@ class Uploader {
         callback: (process: FileUploadProcess) => void,
         finish: () => void
     }> = {};
+    uploadFileMutation: DocumentNode;
 
     subscribe = (
         id: string,
@@ -35,10 +36,15 @@ class Uploader {
         delete this.subscribers[id];
     };
 
-    init = (apolloClient: ApolloClient<NormalizedCacheObject>, onSuccess?: UploadSuccessResolver) => {
+    init = ({apolloClient, onSuccess, mutation }: {
+        apolloClient: ApolloClient<NormalizedCacheObject>,
+        onSuccess?: UploadSuccessResolver,
+        mutation?: DocumentNode
+    }) => {
 
         this.onSuccess = onSuccess;
         this.apolloClient = apolloClient;
+        this.uploadFileMutation = mutation;
 
         apolloClient.addResolvers({
             Mutation: {
@@ -164,18 +170,17 @@ class Uploader {
 
         if (process.params) {
             const params = JSON.parse(process.params);
-            if (params.crop) {
-                variables.crop = params.crop
-            }
-            if (params.bucket) {
-                variables.bucket = params.bucket
+            for(let i in params) {
+                if(params.hasOwnProperty(i)) {
+                    variables[i] = params[i]
+                }
             }
         }
 
         // server mutation
         this.apolloClient
             .mutate({
-                mutation: uploadFile,
+                mutation: this.uploadFileMutation ? this.uploadFileMutation : uploadFile,
                 variables,
                 context: {
                     onProgress: this.handleProgress(process),
