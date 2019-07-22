@@ -29,7 +29,16 @@ const apolloClient =  new ApolloClient({
     cache: new InMemoryCache({})
 });
 Uploader.init({apolloClient});
+
+
 ```
+## Initial configuration
+| Property |      Type      |  Description |  Default |
+|----------|:-------------:|:------|:------|
+| apolloClient |  ApolloClient | ApolloClient instance  | no |
+| onSuccess |  () => Promise | Callback called when upload is success | yes (stub) | 
+| mutation |  DocumentNode | Mutation which uploader sends to server | mutation uploadFile($file: Upload!) {uploadFile(file: $file)} | 
+
 **Note:** 
 * Assumes that you already have installed `apollo-client` and some of Apollo cache implementation like `apollo-cache-inmemory`.
 * Instead of direct passing `uploadLink` to `link` property at ApolloClient config, you should concat it with other links in your app, i.e http link. For example you can use `from()` from 'apollo-link':
@@ -193,14 +202,6 @@ Uploader.init({
 
 ## Customize upload mutation
 Apollo-uploader sends a mutation with attached file. You need to implement resolver on your server for `uploadFile` mutation.
-The default mutation looks like this:
-```graphql
-mutation uploadFile($file: Upload!, $bucket: String, $crop: CropInput ) {
-        uploadFile(file: $file, bucket: $bucket, crop: $crop) {
-            id
-        }
-    }
-```
 You can customize upload mutation by passing it in Uploader.init(). You `MUST NOT` change mutation name and parameter `file`.
 
 ```typescript jsx
