@@ -30,7 +30,6 @@ const apolloClient =  new ApolloClient({
 });
 Uploader.init({apolloClient});
 
-
 ```
 ## Initial configuration
 | Property |      Type      |  Description |  Default |
@@ -119,6 +118,21 @@ class UploadExample extends React.Component {
 }
 
 ```
+And for this example6 when init `Uploader` you should pass `mutation` property built like that:
+
+```typescript jsx
+import gql from "graphql-tag";
+
+const mutation = gql`
+    mutation uploadFile($file: Upload!, $bucket: String, $crop: CropInput ) {
+        uploadFile(file: $file, bucket: $bucket, crop: $crop) {
+            id
+        }
+    }
+`;
+```
+
+
 ## List of upload processes
 You can get all changes of upload processes just by using Apollo Query component and `uploading` query:
 
@@ -174,7 +188,7 @@ class UploadList extends React.Component {
     }
 }
 ```
-**Note:** Do not forget to wrap a root component with an ApolloProvider.
+**Note:** Do not forget to wrap a root component with an ApolloProvider!
 
 ## Upload callback
 You can pass a second argument as a callback function when initializing Uploader.
@@ -199,7 +213,6 @@ Uploader.init({
     onSuccess
 });
 ```
-
 ## Customize upload mutation
 Apollo-uploader sends a mutation with attached file. You need to implement resolver on your server for `uploadFile` mutation.
 You can customize upload mutation by passing it in Uploader.init(). You `MUST NOT` change mutation name and parameter `file`.
@@ -248,6 +261,7 @@ upload(file, {
 | UPLOAD_ABORTED_BY_CLIENT       |  Process aborted by sending abort mutation or calling `abort()` method.   |
 | POST_UPLOAD_PROCESS_ERROR      |  Called `reject()` in `upload callback`. |
 | POST_UPLOAD_PROCESS_DONE       |  Called `resolve()` in `upload callback`. |
+
 
 
 [![License](https://poser.pugx.org/thecodingmachine/graphqlite/license)](https://packagist.org/packages/thecodingmachine/graphqlite)
