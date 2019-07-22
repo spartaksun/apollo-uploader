@@ -1,15 +1,15 @@
 See [example application.](https://github.com/spartaksun/apollo-uploader-example-app)
 
 ## Table of contents:
-* [Install](https://github.com/spartaksun/apollo-uploader#install)
-* [Initialize](https://github.com/spartaksun/apollo-uploader#initialize)
-* [Basic usage](https://github.com/spartaksun/apollo-uploader#basic-usage)
-* [Advanced usage](https://github.com/spartaksun/apollo-uploader#advanced-usage)
-* [List of upload processes](https://github.com/spartaksun/apollo-uploader#list-of-upload-processes)
-* [Upload callback](https://github.com/spartaksun/apollo-uploader#upload-callback)
-* [Customize upload mutation](https://github.com/spartaksun/apollo-uploader#customize-upload-mutation)
-* [FileUploadProcess](https://github.com/spartaksun/apollo-uploader#fileuploadprocess)
-* [FileUploadStatuses](https://github.com/spartaksun/apollo-uploader#fileuploadstatuses)
+* [Install](#install)
+* [Initialize](#initialize)
+* [Basic usage](#basic-usage)
+* [Advanced usage](#advanced-usage)
+* [List of upload processes](#list-of-upload-processes)
+* [Upload callback](#upload-callback)
+* [Customize upload mutation](#customize-upload-mutation)
+* [FileUploadProcess](#fileuploadprocess)
+* [FileUploadStatuses](#fileuploadstatuses)
 
 
 ## Install
@@ -201,7 +201,7 @@ mutation uploadFile($file: Upload!, $bucket: String, $crop: CropInput ) {
         }
     }
 ```
-You can customize upload mutation by passing it in Uploader.init(). You `MUST NOT` change mutation name `uploadFile` and `file` parameter.
+You can customize upload mutation by passing it in Uploader.init(). You `MUST NOT` change mutation name and parameter `file`.
 
 ```typescript jsx
 ...
@@ -234,7 +234,7 @@ upload(file, {
 | status   | FileUploadStatuses |Status of uploading. |    
 | loaded   | number | Number of bytes uploaded to server. |    
 | total    | number | File size in bytes. You should use this value with `loaded` to get loading progress. |    
-| result   | string | `uploadFile` property in server response. Use `JSON.parse()` to get access as object.    | 
+| result   | string | `uploadFile` property in server response. Use `JSON.parse()` to access is as an object.    | 
 
 ## FileUploadStatuses
 
